@@ -3,6 +3,7 @@
 //https://www.iotsharing.com/2017/06/how-to-use-udpip-with-arduino-esp32.html
 /* https://github.com/plapointe6/EspMQTTClient */
 #include "wifi.h"
+#include "allDefenition.h"
 
 #if CONFIG_FREERTOS_UNICORE
 #define ARDUINO_RUNNING_CORE 0
@@ -10,40 +11,58 @@
 #define ARDUINO_RUNNING_CORE 1
 #endif
 
-#ifndef LED_BUILTIN
-#define LED_BUILTIN 13
-#endif
+
+
+
 
 // define two tasks for Blink & AnalogRead
 void TaskBlink( void *pvParameters );
 void TaskAnalogReadA3( void *pvParameters );
 void TaskTestPrint(void *pvParameters) ;
+void TaskButton1( void *pvParameters );
+
+bool state_btn  = true;
+
+char str[]="qwe";
 // the setup function runs once when you press reset or power the board
 void setup() {
   
   // initialize serial communication at 115200 bits per second:
   Serial.begin(115200);
+ pinMode(BUTTON_MASTER_MODE,INPUT_PULLUP);  
 delay(3000)  ;
  
   xTaskCreatePinnedToCore(
     TaskTestPrint
     ,  "TaskTestPrint"
     ,  1024  // Stack size
-    ,  NULL
+    ,  (void*)&str
     ,  2  // Priority
     ,  NULL 
     ,  ARDUINO_RUNNING_CORE);  
 
 
+//Усли нажата кнопка, то загружаемся в режима точки доступа
+
   xTaskCreatePinnedToCore(
     TaskWifiAp
     ,  "TaskWifiAp"
     ,  4096 // Stack size
-    ,  NULL
+    ,  NULL//Передаем состояние кнопки в качестве аргумента
     ,  1  // Priority
     ,  NULL 
     ,  ARDUINO_RUNNING_CORE);  
+
+
     
+      xTaskCreatePinnedToCore(
+    TaskButton1
+    ,  "TaskButton1"
+    ,  512 // Stack size
+    ,  NULL
+    ,  1  // Priority
+    ,  NULL 
+    ,  ARDUINO_RUNNING_CORE); 
 }
 
 void loop()
@@ -61,7 +80,7 @@ void loop()
 /**/
 void TaskTestPrint(void *pvParameters)  // This is a task.
 {
-  (void) pvParameters;
+//  (void) pvParameters;
   
 /*
   AnalogReadSerial
@@ -76,6 +95,28 @@ void TaskTestPrint(void *pvParameters)  // This is a task.
   {
 
     Serial.println("Hello World");
+    Serial.println((char*)pvParameters);
     vTaskDelay(1000);  // one tick delay (15ms) in between reads for stability
   }
+}
+
+void TaskButton1( void *pvParameters ){
+// Определяем режим работы GPIO с кнопкой   
+  
+   while( true ){
+      bool st = digitalRead(BUTTON_MASTER_MODE);
+   
+// Проверка изменения состояния кнопки      
+      if( st != state_btn ){
+          state_btn = st;
+          if( st == LOW ){
+               Serial.println("Button pressed");
+          }
+          else {
+               Serial.println("Button released");            
+          }
+      }
+// Задержка, во время которой выполняются задачи с меньшим приоритетом      
+      vTaskDelay(100);    
+   }  
 }
