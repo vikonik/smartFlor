@@ -9,38 +9,25 @@ const char * pwd = "88115221421";
 // it can be ip address of the server or 
 // a network broadcast address
 // here is broadcast address
-const char * udpAddress = "192.168.1.100";
+const char * udpAddress = "192.168.0.104";
 const int udpPort = 44444;
 
 //create UDP instance
-WiFiUDP udp;
-/*
-void setup(){
-  Serial.begin(115200);
-  
-  //Connect to the WiFi network
-   WiFi.begin(ssid, pwd);
-  Serial.println("");
 
-  // Wait for connection
-  while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.print(".");
-  }
-  Serial.println("");
-  Serial.print("Connected to ");
-  Serial.println(ssid);
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-}
+void TaskUDP(void *pvParameters) {
+    (void) pvParameters;
+    
+    WiFiUDP udp;
+//Раньше здесь была намтройка WiFi
 
-void loop(){
+
+while(1){
   //data will be sent to server
   uint8_t buffer[50] = "hello world";
   //This initializes udp and transfer buffer
-  udp.beginPacket(udpAddress, udpPort);
-  udp.write(buffer, 11);
-  udp.endPacket();
+ // udp.beginPacket(udpAddress, udpPort);
+ // udp.write(buffer, 11);
+ // udp.endPacket();
   memset(buffer, 0, 50);
   //processing incoming packet, must be called before reading the buffer
   udp.parsePacket();
@@ -50,6 +37,8 @@ void loop(){
     Serial.println((char *)buffer);
   }
   //Wait for 1 second
-  delay(1000);
+//  delay(1000);
+//Serial.println("UDP");
+  vTaskDelay(10); 
 }
-*/
+}

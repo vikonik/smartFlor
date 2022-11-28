@@ -1,2 +1,10 @@
 #pragma once
-
+void initTempSens1_j();
+void initTempSens2_j();
+void initWorkMode_j();
+void initDayliRutine_j();
+void initNetSetting_j();
+void initTime_j();
+void initBrokerSetting_j();
+void initSecuritySetting_j();
+void jsonInit();

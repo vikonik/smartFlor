@@ -9,6 +9,8 @@ typedef struct{
 
 }NetSetting_t;
 
+
+
 extern NetSetting_t netSetting;
 
 

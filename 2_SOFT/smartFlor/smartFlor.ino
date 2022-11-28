@@ -4,6 +4,10 @@
 /* https://github.com/plapointe6/EspMQTTClient */
 #include "wifi.h"
 #include "allDefenition.h"
+#include "HAL.h"
+#include <ArduinoJson.h>
+
+
 
 #if CONFIG_FREERTOS_UNICORE
 #define ARDUINO_RUNNING_CORE 0
@@ -20,8 +24,10 @@ void TaskBlink( void *pvParameters );
 void TaskAnalogReadA3( void *pvParameters );
 void TaskTestPrint(void *pvParameters) ;
 void TaskButton1( void *pvParameters );
+void TaskUDP(void *pvParameters);
 
 
+ 
 NetSetting_t netSetting;
 
 bool state_btn  = true;
@@ -37,10 +43,23 @@ void setup() {
 delay(3000)  ;
 
 
+ jsonInit();
+
 netSetting.local_ip = new IPAddress(192,168,0,1);
 netSetting.subnet = new IPAddress(255,255,255,0);
 netSetting.gateway = new IPAddress(192,168,0,1);
  
+  Serial.println();
+
+Serial.printf("Button status %d",digitalRead(BUTTON_MASTER_MODE) );
+ if(!digitalRead(BUTTON_MASTER_MODE)){
+  initWiFi_AP();
+   }
+ else{
+  initWiFi_STA();
+ }
+
+ /*
   xTaskCreatePinnedToCore(
     TaskTestPrint
     ,  "TaskTestPrint"
@@ -49,7 +68,7 @@ netSetting.gateway = new IPAddress(192,168,0,1);
     ,  2  // Priority
     ,  NULL 
     ,  ARDUINO_RUNNING_CORE);  
-
+*/
 
 //Усли нажата кнопка, то загружаемся в режима точки доступа
 
@@ -72,6 +91,17 @@ netSetting.gateway = new IPAddress(192,168,0,1);
     ,  1  // Priority
     ,  NULL 
     ,  ARDUINO_RUNNING_CORE); 
+
+ 
+      xTaskCreatePinnedToCore(
+    TaskUDP
+    ,  "TaskUDP"
+    ,  4096 // Stack size
+    ,  NULL
+    ,  1  // Priority
+    ,  NULL 
+    ,  ARDUINO_RUNNING_CORE); 
+
 }
 
 void loop()

@@ -39,6 +39,7 @@ void TaskWifiAp(void *pvParameters) {
 // Set these to your desired credentials.
 WiFiServer server(80);
 
+/*
  // Serial.begin(115200);//Настраиваем в основной программе
   Serial.println();
 
@@ -49,6 +50,8 @@ Serial.printf("Button status %d",digitalRead(BUTTON_MASTER_MODE) );
  else{
   initWiFi_STA();
  }
+
+*/ 
    server.begin();
 
   Serial.println("Server started");
