@@ -17,37 +17,39 @@
 
 #include "allDefenition.h"
 
-void TaskWifiAp(void *pvParameters) {
-    (void) pvParameters;
-#define LED_BUILTIN 2   // Set the GPIO pin where you connected your test LED or comment this line out if your dev board has a built-in LED
+void initWiFi_AP();
+void initWiFi_STA();
 
-// Set these to your desired credentials.
-const char *ssid = "yourAP";
-const char *password = "yourPassword";
-IPAddress local_ip(192,168,1,1);
-IPAddress gateway(192,168,1,1);
+ const char *ssidDevice = "WormFlor";
+ char *passwordDevice = "00000000";
+ 
+ char *ssid = "Vikonik";
+ char *password = "88115221421";
+
+IPAddress local_ip(192,168,4,1);
+IPAddress gateway(192,168,4,1);
 IPAddress subnet(255,255,255,0);
 
+
+
+void TaskWifiAp(void *pvParameters) {
+    (void) pvParameters;
+
+
+// Set these to your desired credentials.
 WiFiServer server(80);
 
  // Serial.begin(115200);//Настраиваем в основной программе
   Serial.println();
 
+Serial.printf("Button status %d",digitalRead(BUTTON_MASTER_MODE) );
  if(!digitalRead(BUTTON_MASTER_MODE)){
-
-
+  initWiFi_AP();
+   }
+ else{
+  initWiFi_STA();
  }
- else
-  Serial.println("Configuring access point...");
-
-  // You can remove the password parameter if you want the AP to be open.
-  WiFi.softAP(ssid, password);
-  WiFi.softAPConfig(local_ip, gateway, subnet);
-  delay(100);
-  IPAddress myIP = WiFi.softAPIP();
-  Serial.print("AP IP address: ");
-  Serial.println(myIP);
-  server.begin();
+   server.begin();
 
   Serial.println("Server started");
 
@@ -90,10 +92,10 @@ while(1){
 
         // Check to see if the client request was "GET /H" or "GET /L":
         if (currentLine.endsWith("GET /H")) {
-          digitalWrite(LED_BUILTIN, HIGH);               // GET /H turns the LED on
+          digitalWrite(RELAY_PIN, HIGH);               // GET /H turns the LED on
         }
         if (currentLine.endsWith("GET /L")) {
-          digitalWrite(LED_BUILTIN, LOW);                // GET /L turns the LED off
+          digitalWrite(RELAY_PIN, LOW);                // GET /L turns the LED off
         }
       }
     }
@@ -103,4 +105,44 @@ while(1){
   }
 vTaskDelay(10);  
 }
+}
+
+/*
+Настраиваем как точку доступа
+*/
+void initWiFi_AP(){
+
+  Serial.println("Configuring access point...");
+
+  // You can remove the password parameter if you want the AP to be open.
+  WiFi.softAP(ssidDevice, passwordDevice);
+  WiFi.softAPConfig(local_ip, subnet, gateway);
+  delay(100);
+  IPAddress myIP = WiFi.softAPIP();
+  Serial.print("AP IP address: ");
+  Serial.println(myIP);
+
+  
+}
+
+/*
+Настраиваем как клиент
+*/
+void initWiFi_STA(){
+Serial.println("Configuring as STA...");
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid, password);
+  Serial.println("");
+
+  // Wait for connection
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("Connected to ");
+  Serial.println(ssid);
+  Serial.print("IP address: ");
+  Serial.println(WiFi.localIP());
+  
 }

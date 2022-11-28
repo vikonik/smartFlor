@@ -1,10 +1,10 @@
 #include <WiFi.h>
 #include <WiFiUdp.h>
 
-/* WiFi network name and password */
+/* WiFi network name and password 
 const char * ssid = "Vikonik";
 const char * pwd = "88115221421";
-
+*/
 // IP address to send UDP data to.
 // it can be ip address of the server or 
 // a network broadcast address

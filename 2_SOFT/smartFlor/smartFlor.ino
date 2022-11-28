@@ -21,6 +21,9 @@ void TaskAnalogReadA3( void *pvParameters );
 void TaskTestPrint(void *pvParameters) ;
 void TaskButton1( void *pvParameters );
 
+
+NetSetting_t netSetting;
+
 bool state_btn  = true;
 
 char str[]="qwe";
@@ -30,7 +33,13 @@ void setup() {
   // initialize serial communication at 115200 bits per second:
   Serial.begin(115200);
  pinMode(BUTTON_MASTER_MODE,INPUT_PULLUP);  
+ pinMode(RELAY_PIN,OUTPUT);   
 delay(3000)  ;
+
+
+netSetting.local_ip = new IPAddress(192,168,0,1);
+netSetting.subnet = new IPAddress(255,255,255,0);
+netSetting.gateway = new IPAddress(192,168,0,1);
  
   xTaskCreatePinnedToCore(
     TaskTestPrint
