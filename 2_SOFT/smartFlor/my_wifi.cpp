@@ -10,7 +10,7 @@
   Created for arduino-esp32 on 04 July, 2018
   by Elochukwu Ifediora (fedy0)
 */
-
+#include "my_wifi.h"
 #include <WiFi.h>
 #include <WiFiClient.h>
 #include <WiFiAP.h>

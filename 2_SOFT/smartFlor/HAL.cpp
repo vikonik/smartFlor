@@ -32,10 +32,13 @@ JsonArray friday = DayliRutine_j.createNestedArray("FRAIDAY");
 JsonArray setaday = DayliRutine_j.createNestedArray("SETADY");
 JsonArray sunday = DayliRutine_j.createNestedArray("SUNDAY");
 
+/**/
 void initDayliRutineArr_j(JsonArray *arr){
   for(int i = 0; i < 24; i++)
     arr->add("0");
 }
+
+/**/
 void initDayliRutine_j(){
   initDayliRutineArr_j(&monday);
   initDayliRutineArr_j(&tusde);
@@ -88,6 +91,7 @@ SecuritySetting_j["SET_DEFAULT"] = "false";
 SecuritySetting_j["CLEER"] = "false";
 }
 
+/**/
 void jsonInit(){
  initTempSens1_j();
  initTempSens2_j();
@@ -99,3 +103,5 @@ void jsonInit(){
  initSecuritySetting_j();
   
 }
+
+/**/
