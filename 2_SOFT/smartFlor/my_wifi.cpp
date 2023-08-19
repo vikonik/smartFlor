@@ -39,8 +39,8 @@ void initWiFi_AP();
 void initWiFi_STA();
 
 
-IPAddress local_ip(192,168,99,1);
-IPAddress gateway(192,168,99,1);
+IPAddress local_ip(192,168,0,1);
+IPAddress gateway(192,168,0,1);
 IPAddress subnet(255,255,255,0);
 
 
@@ -235,3 +235,5 @@ uint8_t setupWifiStandartWork() {
   //  connectLedOn();
   return 0;
 }
+
+const char pageStyle[] PROGMEM = "варпврирапиаот";

@@ -91,11 +91,11 @@ void getDeviceSetting(){
 выводимв консоль сведения о настройках устройства
 */
 void printDeviceSetting(){
-  int i = 0;  
+  int i = 0;  //755853 46112
   char tmp[64];
   getDeviceSetting();//Получили данные из флаш
   getDeviceInfo();//Получили данные об устройстве
-  Serial.printf("Device ID: 0x%04X%08X\n", (uint16_t)(deviceInfo.deviceID >>32), (uint32_t)deviceInfo.deviceID);
+  Serial.printf("%S 0x%04X%08X\n",F("Device ID:"), (uint16_t)(deviceInfo.deviceID >>32), (uint32_t)deviceInfo.deviceID);
   Serial.printf("Device MAC: %X:%X:%X:%X:%X:%X\n", deviceInfo.mac[0],deviceInfo.mac[1],deviceInfo.mac[2],deviceInfo.mac[3],deviceInfo.mac[4],deviceInfo.mac[5]);
   Serial.printf("Device userLogin: %S\n", deviceInfo.userLogin);
   Serial.printf("Device userPass: %S\n", deviceInfo.userPass);
