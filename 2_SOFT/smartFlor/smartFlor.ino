@@ -6,6 +6,7 @@
 #include "my_wifi.h"
 #include "deviceInfo.h"
 #include "setStartRegim.h"
+#include "webinterface.h"
 
 /*Выбираем на каком ядре будем работать*/
 #if CONFIG_FREERTOS_UNICORE
@@ -22,17 +23,29 @@ void setup() {
 
 // initResetButton() ;
  initSwitchToAPButton();
+
+ initWiFi();
 /*Для FreeRtos*/
 //Задача для WiFi
+  // xTaskCreatePinnedToCore(
+  //   TaskWifiAp
+  //   ,  "TaskWifiAp"
+  //   ,  4096*2 // Stack size
+  //   ,  NULL//Передаем состояние кнопки в качестве аргумента
+  //   ,  1  // Priority
+  //   ,  NULL
+  //   ,  ARDUINO_RUNNING_CORE);
+
+
+//Задача для Web интерфейса
   xTaskCreatePinnedToCore(
-    TaskWifiAp
-    ,  "TaskWifiAp"
+    TaskWebInterface
+    ,  "TaskWebInterface"
     ,  4096*2 // Stack size
     ,  NULL//Передаем состояние кнопки в качестве аргумента
     ,  1  // Priority
     ,  NULL
     ,  ARDUINO_RUNNING_CORE);
-
 
  Serial.println("init complite");
 
@@ -40,6 +53,7 @@ void setup() {
 
 void loop()
 {
+  
 
 }
 
