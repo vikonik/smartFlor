@@ -12,10 +12,10 @@ const char passwordPage[] PROGMEM = "\
 </head>\
 <body>\
     <div class=\"container\">\
-    <h3 class=\"heading\">Контролёр теплого пола TimSim-mini</h3>\
+    <h3 class=\"heading\">Контроллер теплого пола <span class=\"nospan\">TimSim-mini</span></h3>\
     <p class=\"text\">Серийный номер №*****</p>\
-    <form action=\"#\" class=\"text\">\
-       Пароль  <input  type=\"password\" placeholder=\"Пароль\"> \
+    <form action=\"checkinputPassword\" class=\"text\">\
+       Пароль  <input  type=\"password\" placeholder=\"Пароль\" name=\"devicePassword\"> \
        <button class=\"button-log\" type=\"log\">Войти</button> <br>\
       <label for=\"Запомнить это устройство и входить автоматически\">Запомнить это устройство и входить автоматически</label>\
        <input type=\"checkbox\"> \

@@ -86,7 +86,7 @@ void serwerStart() {
   // server.on("/toMainPage", handle_goToMainPage);  //Возврат на страницу управления вентилятором
 
   // //Ввод пароля для доступа на устройство
-  // server.on("/checkinputPassword", handle_checkinputPassword);
+  server.on("/checkinputPassword", handle_checkinputPassword);
 
   server.begin();
   Serial.println("HTTP server started");
@@ -105,6 +105,24 @@ void handle_NotFound() {
 }
 
 
+/*
+Страница ввода пароля
+*/
+void handle_checkinputPassword() {
+  Serial.println("Press paswordSetting");
+  Serial.printf("%s",server.arg("devicePassword"));
+  
+  if ( (server.arg("devicePassword") == deviceInfo.userPass)) {
+    //sendPage(BUTTON_OFF, BUTTON_OFF, BUTTON_OFF, BUTTON_ON);
+Serial.println("God password");
+sendPasswordPage();
+  } 
+  else {
+    Serial.println("Bad password");
+    sendPasswordPage();
+  }
+  
+}
 
 
 /**/
