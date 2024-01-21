@@ -1,12 +1,23 @@
-#include <Arduino.h>
 #include "style.h"
-
+#include "style.h"
+#include <Arduino.h>
 const char style[] PROGMEM = "\
 <style>\
-.nospan{ white-space: nowrap} .nospan:hover { white-space: normal }\
+html{\
+  background-repeat: no-repeat;\
+  background-position: center center;\
+  background-attachment: fixed;\
+  -webkit-background-size: cover;\
+  -moz-background-size: cover;\
+  -o-background-size: cover;\
+  background-size: cover;\
+}\
+\
+.nospan{ white-space: nowrap}\
+.nospan:hover { white-space: normal }\
 .heading{\
-font-size: 36px;\
-text-align: center;\
+    font-size: 36px;\
+	text-align: center;\
 }\
 .heading-mini{text-decoration: none ;\
 text-align: center;\
@@ -16,21 +27,31 @@ text-align: center;\
     background-color: rgb(245, 229, 209, 0.8);\
     padding: 10px;\
 }\
-.container_button{\
-    width: 63%;margin: 0 auto;\
+.container-button{\
+    width: 90%;margin: 0 auto;\
     display: flex;\
     justify-content: center;\
-   flex-wrap: wrap;\
-    max-width: 63%;\
+    max-width: 90%;\
+}\
+.table-rutine{\
+width: 600px;\
+margin: auto;\
 }\
 .top-button{\
     display: flex;\
     flex-wrap: wrap;\
     justify-content: space-between;\
 }\
-.text{font-size: 16px;\
-line-height: 26px;\
-text-align: center;\
+.text{\
+	font-size: 16px;\
+	line-height: 26px;\
+	text-align: center;\
+}\
+.disable-text{\
+	font-size: 16px;\
+	line-height: 26px;\
+	text-align: center;\
+	color: gray;\
 }\
 .button-submit{\
     background: #c9cdd1e5;\
@@ -40,98 +61,149 @@ text-align: center;\
     line-height: 26px;\
     text-align: center;\
     color: #000000;\
-     margin-top: 35px;\
-     margin-bottom: 15px;\
-     margin-right: 25px; \
-     padding-left: 10px;\
-     padding-right: 10px;\
-     min-width: 140px;\
+    margin-top: 10px;\
+    margin-bottom: 10px;\
+    margin-right: 1px; \
+    padding-left: 10px;\
+    padding-right: 10px;\
+    width: 100%;\
+	height:50px;\
    }\
-   .button-log{\
+.button-log{\
     background: #c9cdd1e5;\
     box-shadow: 5px 20px 50px rgba(138, 151, 160, 0.849);\
     border-radius: 5px;\
     padding-left: 15px;\
     padding-right: 15px;\
+\
    }\
-   .link{\
+    \
+.link{\
      text-decoration:none;\
      color: #000000;\
 }\
 .input{\
-    width: 300px;\
+    width:100%;\
 }\
 .button{\
-    max-width: 150px;\
+    width: 100%;\
+	height:50px;\
     background: #c9cdd1e5;\
     box-shadow: 5px 20px 50px rgba(245, 229, 209, 0.76);\
     border-radius: 6px;\
     font-size: 16px;\
     color: black;\
     line-height: 20px;\
-   margin-bottom: 20px;\
+    margin-bottom: 5px;\
     text-align: center;\
-    margin-top: 20px;\
+    margin-top: 5px;\
+\
+\
 }\
 .button-rele{\
     margin-bottom: 10px;\
     background-color: rgb(143, 238, 99);\
     border-radius: 6px;\
-    min-width: 150px;\
+    width: 100%;\
+	min-height: 50px;\
 }\
+\
+@media screen and (min-width: 750px) and (max-width: 800px){ \
+.top{\
+justify-content:center;     }\
+}\
+@media screen and (min-width: 800px) { \
+.top{  \
+display: flex;\
+justify-content:center;     \
+	}\
+}\
+.block-1{\
+\
+	\
+     margin: 0px;\
     display: flex;\
-    justify-content:center;\
-    }\
-    .block-1{\
-    margin: 0px;\
-    display: flex;\
-    flex-direction: column;  \
+    flex-direction: column; \
   }\
-  .block-2{\
+.block-2{\
     margin: 0px;\
+       \
      padding: none;\
   }\
-   .card{\
-        border: black ridge 1px;\
+\
+\
+		@media screen and (max-width: 400px) {\
+			.card{\
+					width: 90%;\
+					margin-bottom: 10px;\
+				margin-left: auto;\
+			margin-right:auto;	\
+			}\
+}\
+\
+@media screen and (min-width: 400px) {\
+.card{\
+		width: 45%;\
         margin-right: 20px;\
         margin-left: 20px;\
         line-height:normal;\
-       display: flex;\
-       justify-content:space-between;\
-       flex-direction: column;\
-    align-items: center;\
     }\
- .top_card{\
+}	\
+\
+.card{\
+border: black ridge 1px;	\
+align-items: center;\
+        display: flex;\
+        justify-content:space-between;\
+        flex-direction: column;\
+}\
+\
+\
+\
+@media screen and (min-width: 400px) {\
+.top_card{	\
+		\
         margin: 0;\
         display: flex;\
-    }\   
-    .checkbox{\
+    }   \
+}	\
+.checkbox{\
         display: flex;\
         padding-left: 20px;\
     }\
-    .mode_work{\
+.mode_work{\
         border: black ridge 1px;\
-        padding-bottom: 25px;\
-        margin: 0px;\ 
+        padding-bottom: 1px;\
+        margin: 0px;\
+        \
     }\
-   .input-number {\
+.input-number {\
     margin-bottom: 10px;\
     opacity: .8;\
-}\   
-.table{\
-    text-align: center;\
+	width: 90%;\
+\
 }\
+\
+\
+.button-schedule:{\
+	height:30px;\
+	\
+}\
+/*\
 .button-schedule:hover{\
         box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\
       }\
 .button-schedule:hover {\
   background: #39a1f4;\
       }\
-  .button-schedule:active {\
+.button-schedule:active {\
         box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);\
         text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);\
       }\
-      .button_with_№{\
+	  */\
+\
+	  \
+.button_with_№{\
     display: flex;\
     line-height: 40px;\
     padding-left: 20px;\
@@ -156,5 +228,6 @@ flex-direction: column;\
 flex-wrap: wrap;\
 align-content: space-around;\
 justify-content: space-around;\
+}\
 </style>\
 ";

@@ -13,6 +13,25 @@ typedef enum{
   MODE_STA
 }WorkMode_t;
 
+//Режим работы устройства
+typedef enum{
+  DEVICE_WORK_MODE_FUTO,
+  DEVICE_WORK_MODE_TIMRT,
+  DEVICE_WORK_MODE_MANUAL
+}DeviceWorkMode_t;
+
+//Дни недели
+typedef enum{
+  SUDAY,
+  MONDAY,
+  TUESDAY,
+  WEDNESDAY,
+  THURSDAY,
+  FRIDAY,
+  SATURDAY
+}WeekDay_t;
+
+
 //Информация об устройстве
 typedef struct{
 	uint64_t deviceID;
@@ -33,6 +52,15 @@ typedef struct{
 	uint32_t keyUseUserSetting;//Если были изменены данные по умолчанию, то здесь 1
   uint32_t keyFerstStart;//Ключ показывает что это первый старт или продолжение работы 0xDEADBEEF
   WorkMode_t workMode;
+  //Дописываем переменные для работы устройства
+  DeviceWorkMode_t deviceWorkMode;//Режим работы
+  uint8_t useOnluSensor_1;//Использовать только датчик температуры №1
+  uint8_t useSound;//Звуковая сигнализация Вклд/Выкл
+  int8_t tempH_sensor_1;
+  int8_t tempL_sensor_1;
+  int8_t tempH_sensor_2;
+  int8_t tempL_sensor_2;
+  uint8_t rutine[7][24];
 }DeviceInfo_t;
 
 extern DeviceInfo_t deviceInfo;

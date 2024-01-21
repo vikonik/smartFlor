@@ -36,7 +36,7 @@ const char* defaultSsidAP = "WormFlor";
 const char* defaultPasswordAP = "00000000";
 
 const char* defaultSsidSTA = "Vikonik";//"ava-1314";
-const char* defaultPasswordSTA = "_88115221421";
+const char* defaultPasswordSTA = "88115221421";
 
 uint32_t addrDeviceID = ADDR_deviceID;
 uint32_t addrMac = addrDeviceID + sizeof(addrDeviceID);
@@ -81,7 +81,7 @@ void checkFerstStartInit(){
 }
 
 /*
-Грузим сведения об устройства из алэша
+Грузим сведения об устройстве из флэша
 */
 void getDeviceSetting(){
  EEPROM.get(addrDeviceID,deviceInfo);
@@ -112,8 +112,11 @@ void printDeviceSetting(){
   Serial.printf("Device brockerTopikIn: %S\n", deviceInfo.brockerTopikIn);
   Serial.printf("Device keyUseUserSetting: 0x%X\n", deviceInfo.keyUseUserSetting);
   Serial.printf("Device keyFerstStart: 0x%X\n", deviceInfo.keyFerstStart);
-
-}
+  //Serial.printf("Device deviceWorkMode: %d\n", deviceInfo.deviceWorkMode);
+  //Serial.printf("Device useOnluSensor_1: %d\n", deviceInfo.useOnluSensor_1);
+  //Serial.printf("Device useSound: %d\n", deviceInfo.useSound);
+    
+    }
 
 
 /*
@@ -190,6 +193,9 @@ void setDefaultSetting(){
       memset(deviceInfo.brockerPass,0, sizeof(deviceInfo.brockerPass)); 
       memset(deviceInfo.brockerTopickOut,0, sizeof(deviceInfo.brockerTopickOut)); 
       memset(deviceInfo.brockerTopikIn,0, sizeof(deviceInfo.brockerTopikIn)); 
+     // memset(deviceInfo.deviceWorkMode,0, sizeof(deviceInfo.deviceWorkMode)); 
+     // memset(deviceInfo.useOnluSensor_1,0, sizeof(deviceInfo.useOnluSensor_1)); 
+      //memset(deviceInfo.useSound,0, sizeof(deviceInfo.useSound)); 
       deviceInfo.keyUseUserSetting = 0;
 
 	
@@ -207,8 +213,11 @@ void setDefaultSetting(){
       memcpy(deviceInfo.brockerPass,mqtt_pass, strlen(mqtt_pass)); 
       memcpy(deviceInfo.brockerTopickOut,outTopic, strlen(outTopic)); 
       memcpy(deviceInfo.brockerTopikIn,inTopic, strlen(inTopic)); 
-    
-  // /*************************************************************************/
+      deviceInfo.tempH_sensor_1 = 11;
+      deviceInfo.tempL_sensor_1 = -12;
+      deviceInfo.tempH_sensor_2 = 13;
+      deviceInfo.tempL_sensor_2 = -14;
+  // /***Настройки для работы устройства и загрузки WEB страниц***************/
 
       EEPROM.put(addrDeviceID,deviceInfo);
       EEPROM.commit();    
